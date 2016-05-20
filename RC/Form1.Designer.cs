@@ -32,6 +32,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.SuspendLayout();
             // 
             // button1
@@ -72,11 +73,21 @@
             this.treeView1.TabIndex = 3;
             this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
+            // maskedTextBox1
+            // 
+            this.maskedTextBox1.Culture = new System.Globalization.CultureInfo("en-001");
+            this.maskedTextBox1.Location = new System.Drawing.Point(46, 38);
+            this.maskedTextBox1.Mask = "000.000.000.000";
+            this.maskedTextBox1.Name = "maskedTextBox1";
+            this.maskedTextBox1.Size = new System.Drawing.Size(100, 20);
+            this.maskedTextBox1.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 356);
+            this.Controls.Add(this.maskedTextBox1);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
@@ -85,6 +96,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -94,6 +106,7 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
     }
 }
 

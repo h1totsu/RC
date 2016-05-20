@@ -11,6 +11,9 @@ namespace RC
 {
     class SocketClient
     {
+
+        private static String ServerIp { get; set; }
+
         private static void Call()
         {
             byte[] bytes = new byte[1024];
@@ -18,7 +21,7 @@ namespace RC
             // Соединяемся с удаленным устройством
 
             // Устанавливаем удаленную точку для сокета
-            IPHostEntry ipHost = Dns.GetHostEntry("localhost");
+            IPHostEntry ipHost = Dns.GetHostEntry(ServerIp);
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
@@ -50,8 +53,9 @@ namespace RC
             sender.Close();
         }
 
-        public static void Start()
+        public static void Start(String serverIp)
         {
+            ServerIp = serverIp;
             ThreadStart threadDelegate = new ThreadStart(SocketClient.Call);
             Thread thread = new Thread(threadDelegate);
             thread.Start();

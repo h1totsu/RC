@@ -13,7 +13,7 @@ namespace RC
     {
         private static void Listen()
         {
-            IPHostEntry ipHost = Dns.GetHostEntry("localhost");
+            IPHostEntry ipHost = Dns.GetHostEntry(GetLocalIPAddress());
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
@@ -71,11 +71,24 @@ namespace RC
         }
         // Устанавливаем для сокета локальную конечную точку
 
-            public static void Start() 
+        public static void Start() 
+        {
+            ThreadStart threadDelegate = new ThreadStart(Listen);
+            Thread thread = new Thread(threadDelegate);
+            thread.Start();
+        }
+
+        private static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
             {
-                ThreadStart threadDelegate = new ThreadStart(SocketServer.Listen);
-                Thread thread = new Thread(threadDelegate);
-                thread.Start();
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
             }
+            throw new Exception("Local IP Address Not Found!");
+        }
     }
 }
