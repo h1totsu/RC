@@ -50,5 +50,24 @@ namespace RC
             FileUtils.CreateDirectoryNode(data.Directories, treeView1.SelectedNode);
             FileUtils.CreateDirectoryNode(data.Files, treeView1.SelectedNode);
         }
+
+        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            treeView1.SelectedNode.Remove();
+            client.Execute(Command.DELETE + ";" + treeView1.SelectedNode.Tag.ToString());
+        }
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                treeView1.SelectedNode = treeView1.GetNodeAt(e.X, e.Y);
+
+                if (treeView1.SelectedNode != null)
+                {
+                    contextMenuStrip1.Show(treeView1, e.Location);
+                }
+            }
+        }
     }
 }

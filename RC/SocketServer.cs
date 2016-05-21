@@ -53,9 +53,25 @@ namespace RC
                     {
                         case Command.GET_DIR_INFO:
                         {
-                            DirectoryInfo dir = new DirectoryInfo(args[1]);
-                            message.Directories = dir.GetDirectories();
-                            message.Files = dir.GetFiles();
+                            if (Directory.Exists(args[1]))
+                            {
+                                DirectoryInfo dir = new DirectoryInfo(args[1]);
+                                message.Directories = dir.GetDirectories();
+                                message.Files = dir.GetFiles();
+                                SendData(handler, message);
+                            }
+                        } break;
+                        case Command.DELETE:
+                        {
+                            message = new Message();
+                            if (Directory.Exists(args[1]))
+                            {
+                                Directory.Delete(args[1], true);
+                            } 
+                            else
+                            {
+                                File.Delete(args[1]);
+                            }
                             SendData(handler, message);
                         } break;
                         case Command.GET_DRIVES:

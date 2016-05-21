@@ -10,10 +10,6 @@ namespace RC
     {
         public const string GET_DIR_INFO = "GET_DIR_INFO";
         public const string GET_DRIVES = "GET_DRIVES";
-
-        public void Execute(String response)
-        {
-            
-        }
+        public const string DELETE = "DELETE";
     }
 }
