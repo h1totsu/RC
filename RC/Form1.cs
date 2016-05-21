@@ -72,7 +72,7 @@ namespace RC
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            client.Execute(Command.RENAME + ";" + treeView1.SelectedNode.Tag.ToString() + ";" + toolStripMenuItem1.Text);
+            client.Execute(Command.RENAME + ";" + treeView1.SelectedNode.Tag.ToString() + ";" + toolStripTextBox1.Text);
         }
     }
 }

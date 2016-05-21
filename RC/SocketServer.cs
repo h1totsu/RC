@@ -77,7 +77,8 @@ namespace RC
                         case Command.RENAME:
                             {
                                 message = new Message();
-                                //Directory.Move(args[1], )
+                                DirectoryInfo dir = new DirectoryInfo(args[1]);
+                                Directory.Move(args[1], dir.Parent.FullName + "\\" + args[2]);
                                 SendData(handler, message);
                             } break;
 
