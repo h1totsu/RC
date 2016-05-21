@@ -11,30 +11,31 @@ namespace RC
 {
     class SocketClient
     {
+        public String ServerIp { get; set; }
+        public static String Response { get; set; }
+        public static String CurrentCommand { get; set; }
+        public static String Args { get; set; }
 
-        private static String ServerIp { get; set; }
+        private Socket sender;
+        private IPEndPoint ipEndPoint;
 
-        private static void Call()
+        public SocketClient(String serverIp)
         {
-            byte[] bytes = new byte[1024];
+            ServerIp = serverIp;
+        }
 
-            // Соединяемся с удаленным устройством
-
-            // Устанавливаем удаленную точку для сокета
-            IPHostEntry ipHost = Dns.GetHostEntry(ServerIp);
+        public Message Execute(String command)
+        {
+            IPHostEntry ipHost = Dns.GetHostEntry(SocketServer.GetLocalIPAddress());
             IPAddress ipAddr = ipHost.AddressList[0];
-            IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 11000);
+            ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
-            Socket sender = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            sender = new Socket(ipAddr.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
-            // Соединяем сокет с удаленной точкой
             sender.Connect(ipEndPoint);
 
-            Console.Write("Введите сообщение: ");
-            string message = Console.ReadLine();
-
-            Console.WriteLine("Сокет соединяется с {0} ", sender.RemoteEndPoint.ToString());
-            byte[] msg = Encoding.UTF8.GetBytes(message);
+            byte[] bytes = new byte[1024];
+            byte[] msg = Encoding.UTF8.GetBytes(command);
 
             // Отправляем данные через сокет
             int bytesSent = sender.Send(msg);
@@ -42,23 +43,16 @@ namespace RC
             // Получаем ответ от сервера
             int bytesRec = sender.Receive(bytes);
 
-            Console.WriteLine("\nОтвет от сервера: {0}\n\n", Encoding.UTF8.GetString(bytes, 0, bytesRec));
+            Object reply = SerializeUtils.ByteArrayToObject(bytes);
+            return (Message)reply;
+        }
 
-            // Используем рекурсию для неоднократного вызова SendMessageFromSocket()
-            if (message.IndexOf("<TheEnd>") == -1)
-                Call();
-
-            // Освобождаем сокет
+        public void Shutdown()
+        {
             sender.Shutdown(SocketShutdown.Both);
             sender.Close();
         }
 
-        public static void Start(String serverIp)
-        {
-            ServerIp = serverIp;
-            ThreadStart threadDelegate = new ThreadStart(SocketClient.Call);
-            Thread thread = new Thread(threadDelegate);
-            thread.Start();
-        }
+
     }
 }

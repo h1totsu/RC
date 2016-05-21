@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -11,6 +12,8 @@ namespace RC
 {
     class SocketServer
     {
+        private static Message message = new Message();
+
         private static void Listen()
         {
             IPHostEntry ipHost = Dns.GetHostEntry(GetLocalIPAddress());
@@ -40,15 +43,31 @@ namespace RC
                     int bytesRec = handler.Receive(bytes);
                     
                     data += Encoding.UTF8.GetString(bytes, 0, bytesRec);
-                    
                     // Показываем данные на консоли
+
                     Console.Write("Полученный текст: " + data + "\n\n");
+
+                    string[] args = data.Split(';');
+
+
+                    switch (args[0])
+                    {
+                        case Command.GET_DIR_INFO:
+                        {
+                            DirectoryInfo dir = new DirectoryInfo(args[1]);
+                            message.Directory = dir;
+                            SendData(handler, message);
+                        } break;
+                        case Command.GET_DRIVES:
+                        {
+                            message.Text = CommandUtils.GetDrives();
+                            SendData(handler, message);
+                        } break;
+                    }
                     
                     // Отправляем ответ клиенту\
                     string reply = "Спасибо за запрос в " + data.Length.ToString()
                             + " символов";
-                    byte[] msg = Encoding.UTF8.GetBytes(reply);
-                    handler.Send(msg);
 
                     if (data.IndexOf("<TheEnd>") > -1)
                     {
@@ -78,7 +97,7 @@ namespace RC
             thread.Start();
         }
 
-        private static string GetLocalIPAddress()
+        public static string GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
@@ -89,6 +108,12 @@ namespace RC
                 }
             }
             throw new Exception("Local IP Address Not Found!");
+        }
+
+        private static void SendData(Socket handler, Message response)
+        {
+            byte[] msg = SerializeUtils.ObjectToByteArray(response);
+            handler.Send(msg);
         }
     }
 }

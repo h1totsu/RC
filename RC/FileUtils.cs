@@ -10,19 +10,15 @@ namespace RC
 {
     class FileUtils
     {
-        public static void ListDirectory(TreeNode node, string path)
+        public static void CreateDirectoryNode(DirectoryInfo directoryInfo, TreeNode directoryNode)
         {
-            node.Nodes.Clear();
-            DirectoryInfo rootDirectoryInfo = new DirectoryInfo(path);
-            CreateDirectoryNode(rootDirectoryInfo, node);
-        }
-
-        private static void CreateDirectoryNode(DirectoryInfo directoryInfo, TreeNode directoryNode)
-        {
+            directoryNode.Nodes.Clear();
             foreach (DirectoryInfo directory in directoryInfo.GetDirectories())
                 directoryNode.Nodes.Add(new TreeNode(directory.Name) { Tag = directory.FullName });
             foreach (FileInfo file in directoryInfo.GetFiles())
                 directoryNode.Nodes.Add(new TreeNode(file.Name) { Tag = file.FullName });
         }
+
+
     }
 }

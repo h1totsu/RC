@@ -12,6 +12,8 @@ namespace RC
 {
     public partial class Form1 : Form
     {
+        SocketClient client;
+
         public Form1()
         {
             InitializeComponent();
@@ -19,7 +21,6 @@ namespace RC
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -29,20 +30,24 @@ namespace RC
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SocketClient.Start(maskedTextBox1.Text);
+            client = new SocketClient(maskedTextBox1.Text);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            treeView1.Nodes.Clear();
-            treeView1.Nodes.Add(new TreeNode("root"));
-            FileUtils.ListDirectory(treeView1.TopNode, @"D:\Arts");
+            Message data = client.Execute(Command.GET_DRIVES);
+            string[] drives = data.Text.Split(';');
+            foreach (string drive in drives)
+            {
+                treeView1.Nodes.Add(new TreeNode(drive) { Tag = drive });
+            }
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             treeView1.SelectedNode.Nodes.Clear();
-            FileUtils.ListDirectory(treeView1.SelectedNode, treeView1.SelectedNode.Tag.ToString());
+            Message data = client.Execute(Command.GET_DIR_INFO + ";" + treeView1.SelectedNode.Tag.ToString());
+            FileUtils.CreateDirectoryNode(data.Directory, treeView1.SelectedNode);
         }
     }
 }
