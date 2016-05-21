@@ -34,7 +34,7 @@ namespace RC
 
             sender.Connect(ipEndPoint);
 
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[4096];
             byte[] msg = Encoding.UTF8.GetBytes(command);
 
             // Отправляем данные через сокет
