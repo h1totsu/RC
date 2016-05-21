@@ -53,8 +53,8 @@ namespace RC
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            treeView1.SelectedNode.Remove();
             client.Execute(Command.DELETE + ";" + treeView1.SelectedNode.Tag.ToString());
+            treeView1.SelectedNode.Remove();
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -68,6 +68,11 @@ namespace RC
                     contextMenuStrip1.Show(treeView1, e.Location);
                 }
             }
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            client.Execute(Command.RENAME + ";" + treeView1.SelectedNode.Tag.ToString() + ";" + toolStripMenuItem1.Text);
         }
     }
 }

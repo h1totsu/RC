@@ -11,5 +11,6 @@ namespace RC
         public const string GET_DIR_INFO = "GET_DIR_INFO";
         public const string GET_DRIVES = "GET_DRIVES";
         public const string DELETE = "DELETE";
+        public const string RENAME = "RENAME";
     }
 }

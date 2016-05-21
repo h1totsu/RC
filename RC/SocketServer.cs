@@ -74,6 +74,13 @@ namespace RC
                             }
                             SendData(handler, message);
                         } break;
+                        case Command.RENAME:
+                            {
+                                message = new Message();
+                                //Directory.Move(args[1], )
+                                SendData(handler, message);
+                            } break;
+
                         case Command.GET_DRIVES:
                         {
                             message.Text = CommandUtils.GetDrives();
