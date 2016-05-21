@@ -26,7 +26,7 @@ namespace RC
 
         public Message Execute(String command)
         {
-            IPHostEntry ipHost = Dns.GetHostEntry(SocketServer.GetLocalIPAddress());
+            IPHostEntry ipHost = Dns.GetHostEntry(ServerIp);
             IPAddress ipAddr = ipHost.AddressList[0];
             ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
