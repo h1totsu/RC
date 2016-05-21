@@ -38,8 +38,8 @@ namespace RC
                     string data = null;
 
                     // Мы дождались клиента, пытающегося с нами соединиться
-                    
-                    byte[] bytes = new byte[Int32.MaxValue];
+
+                    byte[] bytes = new byte[32768];
                     int bytesRec = handler.Receive(bytes);
                     
                     data += Encoding.UTF8.GetString(bytes, 0, bytesRec);
