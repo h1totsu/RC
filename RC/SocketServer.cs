@@ -49,13 +49,13 @@ namespace RC
 
                     string[] args = data.Split(';');
 
-
                     switch (args[0])
                     {
                         case Command.GET_DIR_INFO:
                         {
                             DirectoryInfo dir = new DirectoryInfo(args[1]);
-                            message.Directory = dir;
+                            message.Directories = dir.GetDirectories();
+                            message.Files = dir.GetFiles();
                             SendData(handler, message);
                         } break;
                         case Command.GET_DRIVES:

@@ -15,7 +15,8 @@ namespace RC
     [Serializable]
     class Message
     {
-        public DirectoryInfo Directory { get; set; }
+        public DirectoryInfo[] Directories { get; set; }
+        public FileInfo[] Files { get; set; }
         public String Text { get; set; }
     }
 }

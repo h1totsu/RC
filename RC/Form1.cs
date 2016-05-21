@@ -47,7 +47,8 @@ namespace RC
         {
             treeView1.SelectedNode.Nodes.Clear();
             Message data = client.Execute(Command.GET_DIR_INFO + ";" + treeView1.SelectedNode.Tag.ToString());
-            FileUtils.CreateDirectoryNode(data.Directory, treeView1.SelectedNode);
+            FileUtils.CreateDirectoryNode(data.Directories, treeView1.SelectedNode);
+            FileUtils.CreateDirectoryNode(data.Files, treeView1.SelectedNode);
         }
     }
 }
