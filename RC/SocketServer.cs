@@ -39,7 +39,7 @@ namespace RC
 
                     // Мы дождались клиента, пытающегося с нами соединиться
                     
-                    byte[] bytes = new byte[4096];
+                    byte[] bytes = new byte[Int32.MaxValue];
                     int bytesRec = handler.Receive(bytes);
                     
                     data += Encoding.UTF8.GetString(bytes, 0, bytesRec);
