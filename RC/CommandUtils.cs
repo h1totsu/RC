@@ -19,7 +19,5 @@ namespace RC
             }
             return builder.Remove(builder.Length - 1, 1).ToString();
         }
-
-
     }
 }

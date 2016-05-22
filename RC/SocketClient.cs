@@ -6,15 +6,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RC
 {
     class SocketClient
     {
         public String ServerIp { get; set; }
-        public static String Response { get; set; }
-        public static String CurrentCommand { get; set; }
-        public static String Args { get; set; }
 
         private Socket sender;
         private IPEndPoint ipEndPoint;
@@ -26,7 +24,16 @@ namespace RC
 
         public Message Execute(String command)
         {
-            IPHostEntry ipHost = Dns.GetHostEntry(ServerIp);
+            IPHostEntry ipHost = null;
+            try
+            {
+                ipHost = Dns.GetHostEntry(ServerIp);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Cannot connect to IP");
+                return null;
+            }
             IPAddress ipAddr = ipHost.AddressList[0];
             ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
@@ -52,7 +59,5 @@ namespace RC
             sender.Shutdown(SocketShutdown.Both);
             sender.Close();
         }
-
-
     }
 }

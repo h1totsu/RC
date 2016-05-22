@@ -7,11 +7,13 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RC
 {
     class SocketServer
     {
+        private static Thread thread;
         private static Message message = new Message();
 
         private static void Listen()
@@ -31,8 +33,6 @@ namespace RC
                 // Начинаем слушать соединения
                 while (true)
                 {
-                    Console.WriteLine("Ожидаем соединение через порт {0}", ipEndPoint);
-
                     // Программа приостанавливается, ожидая входящее соединение
                     Socket handler = sListener.Accept();
                     string data = null;
@@ -45,7 +45,6 @@ namespace RC
                     data += Encoding.UTF8.GetString(bytes, 0, bytesRec);
                     // Показываем данные на консоли
 
-                    Console.Write("Полученный текст: " + data + "\n\n");
 
                     string[] args = data.Split(';');
 
@@ -58,7 +57,6 @@ namespace RC
                                 DirectoryInfo dir = new DirectoryInfo(args[1]);
                                 message.Directories = dir.GetDirectories();
                                 message.Files = dir.GetFiles();
-                                SendData(handler, message);
                             }
                         } break;
                         case Command.DELETE:
@@ -72,26 +70,32 @@ namespace RC
                             {
                                 File.Delete(args[1]);
                             }
-                            SendData(handler, message);
                         } break;
                         case Command.RENAME:
-                            {
-                                message = new Message();
-                                DirectoryInfo dir = new DirectoryInfo(args[1]);
-                                Directory.Move(args[1], dir.Parent.FullName + "\\" + args[2]);
-                                SendData(handler, message);
-                            } break;
-
+                        {
+                            DirectoryInfo dir = new DirectoryInfo(args[1]);
+                            string newName = dir.Parent.FullName + "\\" + args[2];
+                            Directory.Move(args[1], newName);
+                            message.Text = newName;
+                        } break;
                         case Command.GET_DRIVES:
                         {
                             message.Text = CommandUtils.GetDrives();
-                            SendData(handler, message);
+                        } break;
+                        case Command.CONNECT:
+                        {
+                            if (MessageBox.Show("Allow connect", "Connect", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                            {
+                                message.Text = Command.SUCCESS;
+                            }
+                            else
+                            {
+                                message.Text = Command.DENIED;
+                            }
                         } break;
                     }
-                    
-                    // Отправляем ответ клиенту\
-                    string reply = "Спасибо за запрос в " + data.Length.ToString()
-                            + " символов";
+
+                    SendData(handler, message);
 
                     if (data.IndexOf("<TheEnd>") > -1)
                     {
@@ -117,7 +121,7 @@ namespace RC
         public static void Start() 
         {
             ThreadStart threadDelegate = new ThreadStart(Listen);
-            Thread thread = new Thread(threadDelegate);
+            thread = new Thread(threadDelegate);
             thread.Start();
         }
 
@@ -138,6 +142,11 @@ namespace RC
         {
             byte[] msg = SerializeUtils.ObjectToByteArray(response);
             handler.Send(msg);
+        }
+
+        public static void Stop()
+        {
+            thread.Abort();
         }
     }
 }

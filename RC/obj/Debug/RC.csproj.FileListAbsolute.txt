@@ -2,8 +2,8 @@ c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\bin\Debug\RC.exe.conf
 c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\bin\Debug\RC.exe
 c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\bin\Debug\RC.pdb
 c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\obj\Debug\RC.csprojResolveAssemblyReference.cache
-c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\obj\Debug\RC.Form1.resources
 c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\obj\Debug\RC.Properties.Resources.resources
 c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\obj\Debug\RC.csproj.GenerateResource.Cache
 c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\obj\Debug\RC.exe
 c:\users\h1tot\documents\visual studio 2013\Projects\RC\RC\obj\Debug\RC.pdb
+C:\Users\h1tot\documents\visual studio 2013\Projects\RC\RC\obj\Debug\RC.frmMain.resources

@@ -7,11 +7,6 @@ using System.Threading.Tasks;
 
 namespace RC
 {
-    public enum Type
-    {
-        TEXT, DIR
-    }
-
     [Serializable]
     class Message
     {

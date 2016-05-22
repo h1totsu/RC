@@ -10,45 +10,65 @@ using System.Windows.Forms;
 
 namespace RC
 {
-    public partial class Form1 : Form
+    public partial class frmMain : Form
     {
         SocketClient client;
 
-        public Form1()
+        public frmMain()
         {
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
+            this.tabPage2.Parent = null;
+            treeView1.ImageList = imageList1;
             SocketServer.Start();
         }
 
+
         private void button2_Click(object sender, EventArgs e)
         {
-            client = new SocketClient(maskedTextBox1.Text);
+            if ("CONNECT".Equals(btnConnect.Text))
+            {
+                client = new SocketClient(mtbxServerIp.Text);
+                Message data = client.Execute(Command.CONNECT);
+                if (data.Text == Command.SUCCESS)
+                {
+                    mtbxServerIp.Enabled = false;
+
+                    this.tabPage1.Parent = null;
+                    this.tabPage2.Parent = this.tbcMenu;
+
+                    btnConnect.Text = "DISSCONNECT";
+
+                    data = client.Execute(Command.GET_DRIVES);
+                    string[] drives = data.Text.Split(';');
+
+                    foreach (string drive in drives)
+                    {
+                        treeView1.Nodes.Add(new TreeNode(drive) { Tag = drive, ImageIndex = 1, SelectedImageIndex = 1 });
+                    }
+                }
+            }
+            else
+            {
+                mtbxServerIp.Enabled = true;
+                btnConnect.Text = "CONNECT";
+                treeView1.Nodes.Clear();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Message data = client.Execute(Command.GET_DRIVES);
-            string[] drives = data.Text.Split(';');
-            foreach (string drive in drives)
-            {
-                treeView1.Nodes.Add(new TreeNode(drive) { Tag = drive });
-            }
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             treeView1.SelectedNode.Nodes.Clear();
             Message data = client.Execute(Command.GET_DIR_INFO + ";" + treeView1.SelectedNode.Tag.ToString());
-            FileUtils.CreateDirectoryNode(data.Directories, treeView1.SelectedNode);
-            FileUtils.CreateDirectoryNode(data.Files, treeView1.SelectedNode);
+            FileUtils.CreateDirectoryNode(data.Directories, treeView1);
+            FileUtils.CreateDirectoryNode(data.Files, treeView1);
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -72,7 +92,19 @@ namespace RC
 
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            client.Execute(Command.RENAME + ";" + treeView1.SelectedNode.Tag.ToString() + ";" + toolStripTextBox1.Text);
+            Message data = client.Execute(Command.RENAME + ";" + treeView1.SelectedNode.Tag.ToString() + ";" + toolStripTextBox1.Text);
+            treeView1.SelectedNode.Text = toolStripTextBox1.Text;
+        }
+
+        private void btnDissconnect_Click(object sender, EventArgs e)
+        {
+            mtbxServerIp.Enabled = true;
+            btnConnect.Text = "CONNECT";
+            treeView1.Nodes.Clear();
+
+            this.tabPage2.Parent = null;
+            this.tabPage1.Parent = this.tbcMenu;
+            SocketServer.Stop();
         }
     }
 }
