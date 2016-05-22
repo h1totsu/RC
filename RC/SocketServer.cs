@@ -84,7 +84,7 @@ namespace RC
                         } break;
                         case Command.CONNECT:
                         {
-                            if (MessageBox.Show("Allow connect", "Connect", MessageBoxButtons.OKCancel) == DialogResult.OK)
+                            if (MessageBox.Show("Allow connect?", "Connect", MessageBoxButtons.OKCancel) == DialogResult.OK)
                             {
                                 message.Text = Command.SUCCESS;
                             }
@@ -96,12 +96,6 @@ namespace RC
                     }
 
                     SendData(handler, message);
-
-                    if (data.IndexOf("<TheEnd>") > -1)
-                    {
-                        Console.WriteLine("Сервер завершил соединение с клиентом.");
-                        break;
-                    }
                     
                     handler.Shutdown(SocketShutdown.Both);
                     handler.Close();

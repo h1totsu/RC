@@ -46,7 +46,9 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnDissconnect = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
             this.contextMenuStrip1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.gbIpAddress.SuspendLayout();
             this.tbcMenu.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -136,6 +138,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(211)))));
+            this.panel1.Controls.Add(this.btnExit);
             this.panel1.Location = new System.Drawing.Point(-3, -2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(673, 35);
@@ -214,6 +217,22 @@
             this.btnDissconnect.UseVisualStyleBackColor = false;
             this.btnDissconnect.Click += new System.EventHandler(this.btnDissconnect_Click);
             // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(211)))));
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnExit.FlatAppearance.BorderSize = 2;
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnExit.ForeColor = System.Drawing.Color.White;
+            this.btnExit.Location = new System.Drawing.Point(644, 5);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(26, 27);
+            this.btnExit.TabIndex = 3;
+            this.btnExit.Text = "X";
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.button1_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,6 +247,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.contextMenuStrip1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.gbIpAddress.ResumeLayout(false);
             this.gbIpAddress.PerformLayout();
             this.tbcMenu.ResumeLayout(false);
@@ -255,6 +275,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnDissconnect;
+        private System.Windows.Forms.Button btnExit;
     }
 }
 
