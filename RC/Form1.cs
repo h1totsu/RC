@@ -13,6 +13,8 @@ namespace RC
     public partial class frmMain : Form
     {
         SocketClient client;
+        public delegate void ChangeView();
+        public ChangeView del;
 
         public frmMain()
         {
@@ -24,7 +26,9 @@ namespace RC
             this.tabPage2.Parent = null;
             treeView1.ImageList = imageList1;
             new SocketServer(this).Start();
+            del = new ChangeView(ChangeViewMethod);
         }
+
 
 
         private void button2_Click(object sender, EventArgs e)
@@ -35,7 +39,7 @@ namespace RC
                 Message data = client.Execute(Command.CONNECT);
                 if (data != null && data.Text == Command.SUCCESS)
                 {
-                    btnConnect.Text = "DISSCONNECT";
+                    btnConnect.Text = "DISCONNECT";
                     mtbxServerIp.Enabled = false;
                     data = client.Execute(Command.GET_DRIVES);
                     string[] drives = data.Text.Split(';');
@@ -117,7 +121,7 @@ namespace RC
 
         }
 
-        public void ChangeView()
+        public void ChangeViewMethod()
         {
             this.tabPage1.Parent = null;
             this.tabPage2.Parent = this.tbcMenu;

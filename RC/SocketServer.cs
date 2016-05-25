@@ -93,7 +93,7 @@ namespace RC
                             if (MessageBox.Show("Allow connect?", "Connect", MessageBoxButtons.OKCancel) == DialogResult.OK)
                             {
                                message.Text = Command.SUCCESS;
-                               form.ChangeView();
+                               form.del.Invoke();
                             }
                             else
                             {
