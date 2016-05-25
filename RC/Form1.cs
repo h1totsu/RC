@@ -23,7 +23,7 @@ namespace RC
         {
             this.tabPage2.Parent = null;
             treeView1.ImageList = imageList1;
-            SocketServer.Start();
+            new SocketServer(this).Start();
         }
 
 
@@ -33,15 +33,10 @@ namespace RC
             {
                 client = new SocketClient(mtbxServerIp.Text);
                 Message data = client.Execute(Command.CONNECT);
-                if (data.Text == Command.SUCCESS)
+                if (data != null && data.Text == Command.SUCCESS)
                 {
-                    mtbxServerIp.Enabled = false;
-
-                    this.tabPage1.Parent = null;
-                    this.tabPage2.Parent = this.tbcMenu;
-
                     btnConnect.Text = "DISSCONNECT";
-
+                    mtbxServerIp.Enabled = false;
                     data = client.Execute(Command.GET_DRIVES);
                     string[] drives = data.Text.Split(';');
 
@@ -110,6 +105,22 @@ namespace RC
         private void button1_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        public void ChangeView()
+        {
+            this.tabPage1.Parent = null;
+            this.tabPage2.Parent = this.tbcMenu;
         }
     }
 }

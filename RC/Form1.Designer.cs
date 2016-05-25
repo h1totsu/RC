@@ -40,13 +40,13 @@
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnExit = new System.Windows.Forms.Button();
             this.gbIpAddress = new System.Windows.Forms.GroupBox();
             this.tbcMenu = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.btnDissconnect = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.contextMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.gbIpAddress.SuspendLayout();
@@ -143,6 +143,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(673, 35);
             this.panel1.TabIndex = 6;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // btnExit
+            // 
+            this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(211)))));
+            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.White;
+            this.btnExit.FlatAppearance.BorderSize = 2;
+            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnExit.ForeColor = System.Drawing.Color.White;
+            this.btnExit.Location = new System.Drawing.Point(644, 5);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(26, 27);
+            this.btnExit.TabIndex = 3;
+            this.btnExit.Text = "X";
+            this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.button1_Click);
             // 
             // gbIpAddress
             // 
@@ -182,6 +199,7 @@
             this.tabPage1.Size = new System.Drawing.Size(662, 412);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "CLIENT";
+            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // tabPage2
             // 
@@ -193,14 +211,6 @@
             this.tabPage2.Size = new System.Drawing.Size(662, 412);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "SERVER";
-            // 
-            // panel2
-            // 
-            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(211)))));
-            this.panel2.Location = new System.Drawing.Point(-3, 480);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(673, 11);
-            this.panel2.TabIndex = 9;
             // 
             // btnDissconnect
             // 
@@ -217,21 +227,13 @@
             this.btnDissconnect.UseVisualStyleBackColor = false;
             this.btnDissconnect.Click += new System.EventHandler(this.btnDissconnect_Click);
             // 
-            // btnExit
+            // panel2
             // 
-            this.btnExit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(211)))));
-            this.btnExit.FlatAppearance.BorderColor = System.Drawing.Color.White;
-            this.btnExit.FlatAppearance.BorderSize = 2;
-            this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(644, 5);
-            this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(26, 27);
-            this.btnExit.TabIndex = 3;
-            this.btnExit.Text = "X";
-            this.btnExit.UseVisualStyleBackColor = false;
-            this.btnExit.Click += new System.EventHandler(this.button1_Click);
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(150)))), ((int)(((byte)(211)))));
+            this.panel2.Location = new System.Drawing.Point(-3, 480);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(673, 11);
+            this.panel2.TabIndex = 9;
             // 
             // frmMain
             // 

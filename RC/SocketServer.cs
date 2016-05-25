@@ -15,10 +15,16 @@ namespace RC
     {
         private static Thread thread;
         private static Message message = new Message();
+        private frmMain form;
 
-        private static void Listen()
+        public SocketServer(frmMain form)
         {
-            IPHostEntry ipHost = Dns.GetHostEntry(GetLocalIPAddress());
+            this.form = form;
+        }
+
+        private void Listen()
+        {
+            IPHostEntry ipHost = Dns.GetHostEntry(this.GetLocalIPAddress());
             IPAddress ipAddr = ipHost.AddressList[0];
             IPEndPoint ipEndPoint = new IPEndPoint(ipAddr, 11000);
 
@@ -86,7 +92,8 @@ namespace RC
                         {
                             if (MessageBox.Show("Allow connect?", "Connect", MessageBoxButtons.OKCancel) == DialogResult.OK)
                             {
-                                message.Text = Command.SUCCESS;
+                               message.Text = Command.SUCCESS;
+                               form.ChangeView();
                             }
                             else
                             {
@@ -112,14 +119,14 @@ namespace RC
         }
         // Устанавливаем для сокета локальную конечную точку
 
-        public static void Start() 
+        public void Start() 
         {
             ThreadStart threadDelegate = new ThreadStart(Listen);
             thread = new Thread(threadDelegate);
             thread.Start();
         }
 
-        public static string GetLocalIPAddress()
+        public string GetLocalIPAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
